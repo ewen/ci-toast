@@ -2,9 +2,9 @@
 
 /**
  * Toast_all
- * 
+ *
  * Runs all tests in the /app/controllers/test/ folder.
- * 
+ *
  * NOTE: This class *REQUIRES* CURL!
  *
  * @package			CodeIgniter
@@ -12,11 +12,11 @@
  * @category		Unit Testing
  * @license			Creative Commons Attribution 3.0 (cc) 2009 Jens Roland
  * @author			Jens Roland (mail@jensroland.com)
- * 
+ *
  */
 
 
-class Toast_all extends Controller
+class Toast_all extends CI_Controller
 {
 	// The folder INSIDE /controllers/ where the test classes are located
 	// TODO: autoset
@@ -24,23 +24,23 @@ class Toast_all extends Controller
 
 	// Files to skip (ie. non-test classes) inside the test dir
 	var $skip = array(
-		'Toast.php',
-		'Toast_all.php'
+		'toast.php',
+		'toast_all.php'
 	);
 
 	// CURL multithreaded mode (only set to true if you are sure your tests
 	// don't conflict when run in parallel)
 	var $multithreaded = false;
 
-	function Toast_all()
+	function __construct()
 	{
-		parent::Controller();
+		parent::__construct();
 	}
 
 	function index()
 	{
 		$output = '';
-		
+
 		// Fetch all test classes
 		$test_files = $this->_get_test_files();
 
@@ -67,14 +67,14 @@ class Toast_all extends Controller
 
 		// Load footer
 		$output .= $this->load->view('test/footer', NULL, TRUE);
-		
+
 		// Send to display
 		echo $output;
 	}
 
 	/**
 	 * Get a list of all the test files in the test dir
-	 * 
+	 *
 	 * @return array of filenames (without '.php' extensions)
 	 */
 	function _get_test_files()
@@ -97,7 +97,7 @@ class Toast_all extends Controller
 
 	/**
 	 * Fetch a number of URLs as a string
-	 * 
+	 *
 	 * @return string containing the (concatenated) HTML documents
 	 * @param array $urls array of fully qualified URLs
 	 */
@@ -117,7 +117,7 @@ class Toast_all extends Controller
 
 	/**
 	 * Fetch a number of URLs as a string (multithreaded)
-	 * 
+	 *
 	 * @return string containing the (concatenated) HTML documents
 	 * @param array $urls array of fully qualified URLs
 	 */
@@ -155,4 +155,4 @@ class Toast_all extends Controller
 }
 
 // End of file Toast_all.php */
-// Location: ./system/application/controllers/test/Toast_all.php */ 
+// Location: ./system/application/controllers/test/Toast_all.php */

@@ -1,11 +1,11 @@
 <?php
-require_once(APPPATH . '/controllers/test/Toast.php');
+require_once(APPPATH . '/controllers/test/toast.php');
 
 class Example_tests extends Toast
 {
-	function Example_tests()
+	function __construct()
 	{
-		parent::Toast(__FILE__);
+		parent::__construct(__FILE__);
 		// Load any models, libraries etc. you need here
 	}
 
