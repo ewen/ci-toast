@@ -19,8 +19,7 @@
 class Toast_all extends CI_Controller
 {
 	// The folder INSIDE /controllers/ where the test classes are located
-	// TODO: autoset
-	var $test_dir = '/test/';
+	var $test_dir;
 
 	// Files to skip (ie. non-test classes) inside the test dir
 	var $skip = array(
@@ -35,6 +34,10 @@ class Toast_all extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+
+		// autoset test_dir
+		$dir = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+		$this->test_dir = '/' . array_pop($dir) . '/';
 	}
 
 	function index()
