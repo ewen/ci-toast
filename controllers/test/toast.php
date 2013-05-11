@@ -22,8 +22,7 @@
 abstract class Toast extends CI_Controller
 {
 	// The folder INSIDE /controllers/ where the test classes are located
-	// TODO: autoset
-	var $test_dir = '/test/';
+	var $test_dir;
 
 	var $modelname;
 	var $modelname_short;
@@ -38,6 +37,10 @@ abstract class Toast extends CI_Controller
 		$this->modelname = $name;
 		$this->modelname_short = basename($name, '.php');
 		$this->messages = array();
+
+		// autoset test_dir
+		$dir = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+		$this->test_dir = '/' . array_pop($dir) . '/';
 	}
 
 	function index()
