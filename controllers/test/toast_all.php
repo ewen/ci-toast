@@ -82,19 +82,25 @@ class Toast_all extends CI_Controller
 	 */
 	function _get_test_files()
 	{
-		$files = array();
-
-		$handle=opendir(APPPATH . '/controllers' . $this->test_dir);
-		while (false!==($file = readdir($handle)))
-		{
-			// Skip hidden/system files and the files in the skip[] array
-			if ( ! in_array($file, $this->skip) && ! (substr($file, 0, 1) == '.'))
+		function readFilesFromDirectory($base, $path, $skip){
+			$files = array();
+			$handle = opendir($base.$path);
+			while (false!==($file = readdir($handle)))
 			{
-				// Remove the '.php' part of the file name
-				$files[] = substr($file, 0, strlen($file) - 4);
+				// Skip hidden/system files and the files in the skip[] array
+				if ( ! in_array($file, $skip) && ! (substr($file, 0, 1) == '.'))
+				{
+					if(is_dir($base.$path.$file)){
+						$files = array_merge($files, readFilesFromDirectory($base, $path.$file."/", $skip));
+					}else{
+						$files[] = $path.substr($file, 0, strlen($file) - 4);
+					}
+				}
 			}
-		}
-		closedir($handle);
+			closedir($handle);
+			return $files;
+		};
+		$files = readFilesFromDirectory(APPPATH . '/controllers' . $this->test_dir, '', $this->skip);
 		return $files;
 	}
 
