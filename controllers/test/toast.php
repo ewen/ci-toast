@@ -39,8 +39,12 @@ abstract class Toast extends CI_Controller
 		$this->messages = array();
 
 		// autoset test_dir
-		$dir = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
-		$this->test_dir = '/' . array_pop($dir) . '/';
+		$reflection = new ReflectionClass(get_called_class());
+		$dir = $reflection->getFileName();
+		$dir = substr($dir, strpos($dir, "controllers")+12);
+		$dir = explode(DIRECTORY_SEPARATOR, $dir);
+		array_pop($dir);
+		$this->test_dir = '/' . implode('/', $dir) . '/';
 	}
 
 	function index()
