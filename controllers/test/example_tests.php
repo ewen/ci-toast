@@ -59,6 +59,12 @@ class Example_tests extends Toast
 
 		$this->message = '$a || $b';
 	}
+	
+	function test_that_fails_with_php_error()
+	{
+
+		$this->_assert_true($null); // $null doesnt exist
+	}
 
 }
 
