@@ -39,8 +39,14 @@ abstract class Toast extends CI_Controller
 		$this->messages = array();
 
 		// autoset test_dir
-		$dir = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
-		$this->test_dir = '/' . array_pop($dir) . '/';
+		$reflection = new ReflectionClass(get_called_class());
+		$dir = $reflection->getFileName();
+		$dir = substr($dir, strpos($dir, "controllers")+12);
+		$dir = explode(DIRECTORY_SEPARATOR, $dir);
+		array_pop($dir);
+		$this->test_dir = '/' . implode('/', $dir) . '/';
+		// Set custom error handler
+		set_error_handler(array($this, "_error_function"));
 	}
 
 	function index()
@@ -263,6 +269,17 @@ abstract class Toast extends CI_Controller
 		} else {
 			$this->asserts = FALSE;
 			return FALSE;
+		}
+	}
+	
+	function _error_function($level, $message, $file, $line, $context)
+	{
+		if($level == E_NOTICE || $level == E_RECOVERABLE_ERROR){
+			$this->messages[] = "
+			Message: $message<br/>
+			Filename: $file<br/>
+			Line Number: $line";
+			$this->_fail();
 		}
 	}
 
